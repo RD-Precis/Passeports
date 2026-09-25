@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Passeport Digital Horloger • Traçabilité & Qualité</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    background: #0f172a;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+.app-container {
+    width: 100%;
+    max-width: 520px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+}
+
+/* EN-TÊTE LUXE */
+.app-header {
+    background: #ffffff;
+    border-bottom: 2px solid #0f172a;
+    padding: 20px;
+    text-align: center;
+}
+.brand-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+.brand-subtitle {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #64748b;
+}
+
+/* ÉCRAN DE VERROUILLAGE PIN */
+#lock-screen {
+    padding: 35px 25px;
+    text-align: center;
+}
+.lock-shield {
+    width: 56px;
+    height: 56px;
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 18px auto;
+    font-size: 24px;
+}
+.lock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.lock-desc {
+    font-size: 11.5px;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+.pin-grid {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+.pin-input {
+    width: 52px;
+    height: 60px;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #0f172a;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.pin-input:focus {
+    border-color: #0f172a;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(15,23,42,0.1);
+}
+.btn-unlock {
+    width: 100%;
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.btn-unlock:hover {
+    background: #1e293b;
+}
+.pin-error {
+    color: #b91c1c;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 14px;
+    display: none;
+}
+.pin-hint {
+    margin-top: 25px;
+    font-size: 10px;
+    color: #64748b;
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px dashed #cbd5e1;
+}
+
+/* ÉCRAN PASSEPORT DÉVERROUILLÉ */
+#passport-screen {
+    display: none;
+    padding: 20px;
+}
+.certified-banner {
+    background: #ecfdf5;
+    border: 1px solid #6ee7b7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+.certified-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #065f46;
+    letter-spacing: 0.5px;
+}
+.swiss-pill {
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.section-box {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+    background: #ffffff;
+}
+.section-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+.prop-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 11.5px;
+    margin-bottom: 5px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #f1f5f9;
+}
+.prop-row:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.prop-label {
+    color: #64748b;
+}
+.prop-val {
+    font-weight: 700;
+    color: #0f172a;
+    text-align: right;
+}
+
+.table-metrologie {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+    margin-top: 8px;
+}
+.table-metrologie th {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 2px solid #0f172a;
+    padding: 6px 8px;
+    text-align: left;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+.table-metrologie td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #f1f5f9;
+}
+.badge-ok {
+    color: #166534;
+    font-weight: 700;
+    text-align: center;
+}
+
+.btn-certif-dl {
+    display: block;
+    width: 100%;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+}
+.btn-certif-dl:hover {
+    background: #f1f5f9;
+}
+
+.app-footer {
+    border-top: 1px solid #e2e8f0;
+    padding: 14px;
+    text-align: center;
+    font-size: 9px;
+    color: #64748b;
+    line-height: 1.5;
+    background: #f8fafc;
+}
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="app-header">
+        <div class="brand-title" id="lbl-raison">RD PRECIS SA</div>
+        <div class="brand-subtitle" id="lbl-sub">Passeport Numérique de Traçabilité • Neuchâtel</div>
+    </div>
+
+    <!-- 1. ÉCRAN DE VERROUILLAGE PIN -->
+    <div id="lock-screen">
+        <div class="lock-shield">🔒</div>
+        <div class="lock-title">Accès Sécurisé au Lot</div>
+        <div class="lock-desc">
+            Ce dossier technique est strictement confidentiel.
+
+            Saisissez le <b>code PIN à 4 chiffres</b> imprimé sur l'étiquette de livraison de votre sachet.
+        </div>
+
+        <div class="pin-grid">
+            <input type="tel" maxlength="1" class="pin-input" id="pin-1" inputmode="numeric" pattern="[0-9]*" autofocus>
+            <input type="tel" maxlength="1" class="pin-input" id="pin-2" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" maxlength="1" class="pin-input" id="pin-3" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" maxlength="1" class="pin-input" id="pin-4" inputmode="numeric" pattern="[0-9]*">
+        </div>
+
+        <button class="btn-unlock" onclick="checkPin()">Déverrouiller le Passeport</button>
+        <div class="pin-error" id="pin-err">⚠️ Code PIN incorrect. Vérifiez le code sur votre étiquette.</div>
+
+        <div class="pin-hint">
+            💡 <b>Sécurité d'étanchéité :</b> Chaque lot de fabrication dispose de son propre code PIN unique. Aucune donnée d'un autre client ne peut être consultée.
+        </div>
+    </div>
+
+    <!-- 2. ÉCRAN PASSEPORT DÉVERROUILLÉ -->
+    <div id="passport-screen">
+        <div class="certified-banner">
+            <div class="certified-label">✓ Lot Contrôlé & Déclaré Conforme</div>
+            <div class="swiss-pill">SWISS MADE</div>
+        </div>
+
+        <!-- IDENTITÉ PIÈCE -->
+        <div class="section-box">
+            <div class="section-title">Composant Horloger & Expédition</div>
+            <div class="prop-row"><span class="prop-label">Désignation :</span><span class="prop-val" id="p-desig">Platine Horlogère</span></div>
+            <div class="prop-row"><span class="prop-label">Réf. Composant :</span><span class="prop-val" id="p-ref">PF-001-A</span></div>
+            <div class="prop-row"><span class="prop-label">Plan & Indice :</span><span class="prop-val" id="p-plan">PL-2026 (Rév. B)</span></div>
+            <div class="prop-row"><span class="prop-label">Quantité Livrée :</span><span class="prop-val" id="p-qte">500 pcs</span></div>
+            <div class="prop-row"><span class="prop-label">N° Bon de Livraison :</span><span class="prop-val" id="p-bl">BL-2026-0001</span></div>
+            <div class="prop-row"><span class="prop-label">N° Ordre Fab. (OF) :</span><span class="prop-val" id="p-of">OF-2026-0001</span></div>
+            <div class="prop-row"><span class="prop-label">Date de Libération :</span><span class="prop-val" id="p-date">24.09.2026</span></div>
+        </div>
+
+        <!-- PÉDIGRÉE MATIÈRE 3.1 -->
+        <div class="section-box">
+            <div class="section-title">Traçabilité Métallurgique (EN 10204 3.1)</div>
+            <div class="prop-row"><span class="prop-label">Nuance Alliage :</span><span class="prop-val" id="p-mat-nuance">Acier Inox 1.4441 (316L)</span></div>
+            <div class="prop-row"><span class="prop-label">Format Brut :</span><span class="prop-val" id="p-mat-format">Barre étirée Ø 12.00 mm</span></div>
+            <div class="prop-row"><span class="prop-label">N° Coulée Aciérie :</span><span class="prop-val" id="p-mat-coulee">C-88912-B</span></div>
+            <div class="prop-row"><span class="prop-label">N° Lot Matière :</span><span class="prop-val" id="p-mat-lot">LOT-2026-04</span></div>
+            <div class="prop-row"><span class="prop-label">Aciérie / Source :</span><span class="prop-val" id="p-mat-fourn">Aciers Spéciaux SA</span></div>
+            <a href="#" id="p-certif-btn" class="btn-certif-dl" onclick="alert('Certificat 3.1 officiel associé à ce lot.'); return false;">📄 Consulter le Certificat Usine 3.1</a>
+        </div>
+
+        <!-- MÉTROLOGIE STATISTIQUE -->
+        <div class="section-box">
+            <div class="section-title">Contrôle Métrologique & Libération Qualité</div>
+            <div class="prop-row"><span class="prop-label">Environnement de Mesure :</span><span class="prop-val">Laboratoire 20°C ± 1°C</span></div>
+            <div class="prop-row"><span class="prop-label">Lavage & Désoxydation :</span><span class="prop-val" style="color:#166534;">100% Conforme (Ultrasons)</span></div>
+            <div class="prop-row"><span class="prop-label">État de Surface (Ra) :</span><span class="prop-val">Ra 0.18 µm (Max Ra 0.4)</span></div>
+
+            <table class="table-metrologie">
+                <thead>
+                    <tr>
+                        <th>Cote / Caractéristique</th>
+                        <th style="text-align:right;">Nominale</th>
+                        <th style="text-align:right;">Moyenne</th>
+                        <th style="text-align:center;">Statut</th>
+                    </tr>
+                </thead>
+                <tbody id="p-cotes-body">
+                    <tr><td>Ø Extérieur</td><td style="text-align:right;">12.000 ± 0.005</td><td style="text-align:right; font-weight:700;">12.002 mm</td><td class="badge-ok">OK</td></tr>
+                    <tr><td>Épaisseur totale</td><td style="text-align:right;">2.450 ± 0.004</td><td style="text-align:right; font-weight:700;">2.451 mm</td><td class="badge-ok">OK</td></tr>
+                    <tr><td>Entraxe de fixation</td><td style="text-align:right;">8.500 ± 0.005</td><td style="text-align:right; font-weight:700;">8.501 mm</td><td class="badge-ok">OK</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- VISA QUALITÉ -->
+        <div style="text-align:center; padding:10px; font-size:10px; color:#475569;">
+            Visa Laboratoire Qualité : <b>Libéré pour utilisation horlogère</b>
+
+            Référentiel qualité certifié selon la norme <b>ISO 9001:2015</b>
+        </div>
+    </div>
+
+    <div class="app-footer">
+        Manufacture <b>RD PRECIS SA</b> • Rue de la Louvière 122, CH-2000 Neuchâtel
+
+        Haute Horlogerie • Haute Joaillerie • Micromécanique de Précision
+    </div>
+</div>
+
+<script>
+// Gestion automatique des 4 cases de PIN
+const inputs = [document.getElementById('pin-1'), document.getElementById('pin-2'), document.getElementById('pin-3'), document.getElementById('pin-4')];
+
+inputs.forEach((input, index) => {
+    input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < 3) {
+            inputs[index + 1].focus();
+        }
+        if (inputs.every(i => i.value.length === 1)) {
+            checkPin();
+        }
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+            inputs[index - 1].focus();
+        }
+    });
+});
+
+let currentData = null;
+
+// Chargement des données selon le paramètre URL ?id=...
+async function init() {
+    const params = new URLSearchParams(window.location.search);
+    const uuid = params.get('id') || 'demo';
+    
+    try {
+        const res = await fetch(`data/${uuid}.json`);
+        if (res.ok) {
+            currentData = await res.json();
+        }
+    } catch(e) {}
+    
+    // Données par défaut pour démonstration
+    if (!currentData) {
+        currentData = {
+            pin: "1234",
+            ref: "PF-001-A",
+            desig: "Platine Squelette 39mm",
+            plan: "PL-2026 (Rév. B)",
+            qte: "500 pcs",
+            bl: "BL-2026-0001",
+            of: "OF-2026-0001",
+            date: "24.09.2026",
+            mat_nuance: "Acier Inox 1.4441 (316L)",
+            mat_format: "Barre étirée Ø 12.00 mm",
+            mat_coulee: "C-88912-B",
+            mat_lot: "LOT-2026-04",
+            mat_fourn: "Aciers Spéciaux SA"
+        };
+    }
+}
+
+function checkPin() {
+    const entered = inputs.map(i => i.value).join('');
+    const expected = (currentData && currentData.pin) ? String(currentData.pin) : '1234';
+    
+    if (entered === expected) {
+        // Remplissage des données
+        document.getElementById('p-ref').textContent = currentData.ref || '';
+        document.getElementById('p-desig').textContent = currentData.desig || '';
+        document.getElementById('p-plan').textContent = currentData.plan || '';
+        document.getElementById('p-qte').textContent = currentData.qte || '';
+        document.getElementById('p-bl').textContent = currentData.bl || '';
+        document.getElementById('p-of').textContent = currentData.of || '';
+        document.getElementById('p-date').textContent = currentData.date || '';
+        
+        document.getElementById('p-mat-nuance').textContent = currentData.mat_nuance || '-';
+        document.getElementById('p-mat-format').textContent = currentData.mat_format || '-';
+        document.getElementById('p-mat-coulee').textContent = currentData.mat_coulee || '-';
+        document.getElementById('p-mat-lot').textContent = currentData.mat_lot || '-';
+        document.getElementById('p-mat-fourn').textContent = currentData.mat_fourn || '-';
+        
+        document.getElementById('lock-screen').style.display = 'none';
+        document.getElementById('passport-screen').style.display = 'block';
+    } else {
+        document.getElementById('pin-err').style.display = 'block';
+        inputs.forEach(i => { i.value = ''; });
+        inputs[0].focus();
+    }
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
