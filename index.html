@@ -398,7 +398,10 @@ async function init() {
     const uuid = params.get('id') || 'demo';
     
     try {
-        const res = await fetch(`data/${uuid}.json`);
+        const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+        const jsonUrl = window.location.origin + basePath + 'data/' + uuid + '.json?t=' + Date.now();
+        console.log('Chargement Cloud:', jsonUrl);
+        const res = await fetch(jsonUrl);
         if (res.ok) {
             currentData = await res.json();
         }
