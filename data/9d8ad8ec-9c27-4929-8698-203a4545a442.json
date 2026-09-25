@@ -1,16 +1,20 @@
 {
   "pin": "9558",
   "ref": "PF-001-A",
-  "desig": "Platine Horlogere",
-  "plan": "PL-2026 (Rev. B)",
+  "desig": "Platine Horlogère",
+  "plan": " (Rév. )",
   "qte": "1 pcs",
   "bl": "BL-2026-0001-1",
   "of": "OF-2026-0001",
   "date": "24.09.2026",
-  "client": "leon marcel",
+  "client": "CLI-2026-0013",
   "mat_nuance": "Acier Inox 1.4441 (316L)",
-  "mat_format": "Barre etiree D 12.00 mm",
-  "mat_coulee": "C-88912-B",
-  "mat_lot": "LOT-2026-04",
-  "mat_fourn": "Aciers Speciaux SA"
+  "mat_format": "Barre étirée",
+  "mat_coulee": "Non spécifié",
+  "mat_lot": "Non spécifié",
+  "mat_certif": "EN 10204 3.1",
+  "mat_fourn": "Fournisseur Agréé",
+  "controls": [],
+  "ctrl_decision": "Conforme / Accepté",
+  "ctrl_visa": "Laboratoire Métrologie"
 }
