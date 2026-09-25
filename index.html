@@ -356,7 +356,7 @@ body {
 
         <!-- VISA QUALITÉ -->
         <div style="text-align:center; padding:10px; font-size:10px; color:#475569;">
-            Visa Laboratoire Qualité : <b>Libéré pour utilisation horlogère</b>
+            Visa Laboratoire Qualité : <b id="p-ctrl-visa">Libéré pour utilisation horlogère</b>
 
             Référentiel qualité certifié selon la norme <b>ISO 9001:2015</b>
         </div>
@@ -443,6 +443,30 @@ function checkPin() {
         document.getElementById('p-mat-coulee').textContent = currentData.mat_coulee || '-';
         document.getElementById('p-mat-lot').textContent = currentData.mat_lot || '-';
         document.getElementById('p-mat-fourn').textContent = currentData.mat_fourn || '-';
+
+        // Affichage dynamique des mesures et cotes réelles
+        const tbody = document.getElementById('p-cotes-body');
+        if (tbody && currentData.controls && Array.isArray(currentData.controls) && currentData.controls.length > 0) {
+            tbody.innerHTML = '';
+            currentData.controls.forEach(c => {
+                const tr = document.createElement('tr');
+                const nom = c.carac || c.cote || c.nom || 'Cote';
+                let tol = c.nominale || '-';
+                if (c.tol_min !== undefined || c.tol_max !== undefined) {
+                    tol += ' (' + (c.tol_min || '0') + ' / ' + (c.tol_max || '0') + ')';
+                }
+                const mes = c.mesure !== undefined ? c.mesure : '-';
+                const isOk = (c.ok === true || c.ok === 'true' || c.decision === 'Conforme' || c.statut === 'OK');
+                const badgeClass = isOk ? 'badge-ok' : 'badge-err';
+                const badgeText = isOk ? 'OK' : 'NOK';
+                tr.innerHTML = '<td>' + nom + '</td><td style="text-align:right;">' + tol + '</td><td style="text-align:right;">' + mes + '</td><td style="text-align:center;"><span class="' + badgeClass + '">' + badgeText + '</span></td>';
+                tbody.appendChild(tr);
+            });
+        }
+        if (currentData.ctrl_visa) {
+            const elVisa = document.getElementById('p-ctrl-visa');
+            if (elVisa) elVisa.textContent = currentData.ctrl_visa;
+        }
         
         document.getElementById('lock-screen').style.display = 'none';
         document.getElementById('passport-screen').style.display = 'block';
