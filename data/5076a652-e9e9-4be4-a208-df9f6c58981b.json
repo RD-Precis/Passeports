@@ -1,0 +1,20 @@
+{
+  "pin": "5859",
+  "ref": "PF-004-A",
+  "desig": "Platine Horlogère",
+  "plan": " (Rév. )",
+  "qte": "12 pcs",
+  "bl": "BL-2026-0006-1",
+  "of": "OF-2026-0006",
+  "date": "25.09.2026",
+  "client": "CLI-2026-0016",
+  "mat_nuance": "TEST 1",
+  "mat_format": "Barre Ø 20 mm",
+  "mat_coulee": "84562",
+  "mat_lot": "1234",
+  "mat_certif": "0001",
+  "mat_fourn": "Metaltest",
+  "controls": [],
+  "ctrl_decision": "Conforme / Accepté",
+  "ctrl_visa": "Laboratoire Métrologie"
+}
