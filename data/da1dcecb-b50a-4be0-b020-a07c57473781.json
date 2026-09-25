@@ -14,7 +14,35 @@
   "mat_lot": "LOT-441",
   "mat_certif": "CERT-9814",
   "mat_fourn": "PX Precimet",
-  "controls": [],
-  "ctrl_decision": "Conforme / Accepté",
-  "ctrl_visa": "Laboratoire Métrologie"
+  "controls": [
+    {
+      "carac": "Ø Extérieur",
+      "nominale": "12.000",
+      "tol_min": "-0.005",
+      "tol_max": "+0.005",
+      "mesure": "12.002",
+      "instrument": "Micromètre numérique",
+      "ok": true
+    },
+    {
+      "carac": "Épaisseur totale",
+      "nominale": "2.450",
+      "tol_min": "-0.004",
+      "tol_max": "+0.004",
+      "mesure": "2.451",
+      "instrument": "Comparateur vertical",
+      "ok": true
+    },
+    {
+      "carac": "Entraxe de fixation",
+      "nominale": "8.500",
+      "tol_min": "-0.005",
+      "tol_max": "+0.005",
+      "mesure": "8.499",
+      "instrument": "Machine optique",
+      "ok": true
+    }
+  ],
+  "ctrl_decision": "Accepté",
+  "ctrl_visa": "R. Dubois - Accepté"
 }
